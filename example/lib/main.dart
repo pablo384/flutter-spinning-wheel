@@ -60,13 +60,14 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget buildNavigationButton({String text, Function onPressedFn}) {
-    return FlatButton(
-      color: Color.fromRGBO(255, 255, 255, 0.3),
-      textColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(50.0),
-      ),
+  Widget buildNavigationButton(
+      {required String text, void Function()? onPressedFn}) {
+    return TextButton(
+      // color: Color.fromRGBO(255, 255, 255, 0.3),
+      // textColor: Colors.white,
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(50.0),
+      // ),
       onPressed: onPressedFn,
       child: Text(
         text,
@@ -104,7 +105,7 @@ class Basic extends StatelessWidget {
             ),
             StreamBuilder(
               stream: _dividerController.stream,
-              builder: (context, snapshot) =>
+              builder: (context, AsyncSnapshot<dynamic> snapshot) =>
                   snapshot.hasData ? BasicScore(snapshot.data) : Container(),
             )
           ],
@@ -117,7 +118,7 @@ class Basic extends StatelessWidget {
 }
 
 class BasicScore extends StatelessWidget {
-  final int selected;
+  final int? selected;
 
   final Map<int, String> labels = {
     1: 'Purple',
@@ -132,7 +133,7 @@ class BasicScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('${labels[selected]}',
+    return Text('${labels[selected!]}',
         style: TextStyle(fontStyle: FontStyle.italic));
   }
 }
@@ -175,11 +176,11 @@ class Roulette extends StatelessWidget {
             SizedBox(height: 30),
             StreamBuilder(
               stream: _dividerController.stream,
-              builder: (context, snapshot) =>
+              builder: (context, AsyncSnapshot<dynamic> snapshot) =>
                   snapshot.hasData ? RouletteScore(snapshot.data) : Container(),
             ),
             SizedBox(height: 30),
-            new RaisedButton(
+            new ElevatedButton(
               child: new Text("Start"),
               onPressed: () =>
                   _wheelNotifier.sink.add(_generateRandomVelocity()),
@@ -196,7 +197,7 @@ class Roulette extends StatelessWidget {
 }
 
 class RouletteScore extends StatelessWidget {
-  final int selected;
+  final int? selected;
 
   final Map<int, String> labels = {
     1: '1000\$',
@@ -213,7 +214,7 @@ class RouletteScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('${labels[selected]}',
+    return Text('${labels[selected!]}',
         style: TextStyle(fontStyle: FontStyle.italic, fontSize: 24.0));
   }
 }
